@@ -11,6 +11,7 @@
 <meta property="og:image" content="logo-entre-quesos.webp">
 <link rel="icon" href="logo-entre-quesos.webp" type="image/webp">
 <title>Entre Quesos Fiambrería</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3yn7v5R7p1dP7Nw4mN5R5g9gqv5s=" crossorigin="">
 <style>
 :root{--ink:#17130f;--wood:#b8793f;--cream:#fffaf4;--muted:#74685e;--line:#e7dbce;--green:#198754}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--cream);color:var(--ink);line-height:1.55}a{text-decoration:none;color:inherit}
@@ -23,7 +24,7 @@
 .section{padding:78px clamp(18px,7vw,105px)}h2{font-size:clamp(34px,5vw,56px);margin:.22em 0}.categories,.catalog{display:grid;gap:14px}.categories{grid-template-columns:repeat(3,1fr);margin-top:28px}.cat,.product,.info,.cta{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 8px 24px #35271a0d}.cat span{font-size:32px}.cat h3{margin:8px 0 3px}.cat p,.product p,.cta p{color:var(--muted);margin:0}
 .catalog-section{background:#f7ecdf}.group{margin-top:32px}.group-title{font:700 29px Georgia,serif;margin:0 0 12px}.catalog{grid-template-columns:repeat(4,1fr)}.product{display:flex;min-height:230px;flex-direction:column;justify-content:space-between}.product small{font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#9a673c}.product h3{font:700 23px Georgia,serif;margin:8px 0}.stock{margin-top:18px;padding:12px 14px;background:var(--ink);color:#fff;text-align:center;font-size:13px}.note{margin-top:24px;padding:16px 18px;border:1px dashed #b9895e;border-radius:15px;background:#fff8ef;color:#5d5046}
 .banner{margin:10px clamp(14px,5vw,70px);padding:38px clamp(22px,5vw,60px);background:var(--ink);color:#fff;border-radius:28px;display:flex;align-items:center;justify-content:space-between;gap:22px}.banner p{color:#dfd7cf;margin:8px 0}.light{background:#f4e2cc;color:var(--ink)}
-.split,.local{display:grid;grid-template-columns:1fr .9fr;gap:28px}.steps{padding:0;list-style:none}.steps li{margin:12px 0}.info{background:#f0dfca}.info p{margin:3px 0 14px;color:#5d5046}.location-card{display:flex;flex-direction:column;justify-content:center;min-height:350px;padding:34px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,#fffdf9,#f4e6d7);box-shadow:0 8px 24px #35271a0d}.location-icon{font-size:44px;line-height:1;margin-bottom:14px}.location-card h3{font:700 30px Georgia,serif;margin:0 0 10px}.location-card p{margin:0;color:var(--muted);font-size:17px}.location-address{margin:22px 0;padding:18px;border-radius:18px;background:#fff;border:1px solid var(--line);font-weight:900;font-size:20px;line-height:1.25}.location-actions{display:flex;gap:12px;flex-wrap:wrap}.location-actions .btn{padding:14px 18px}.cta{background:linear-gradient(#fff8ef,#f3e2ce)}.cta ul{color:#5d5046}
+.split,.local{display:grid;grid-template-columns:1fr .9fr;gap:28px}.steps{padding:0;list-style:none}.steps li{margin:12px 0}.info{background:#f0dfca}.info p{margin:3px 0 14px;color:#5d5046}.map-shell{position:relative;min-height:350px;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#e9e4dc;box-shadow:0 8px 24px #35271a0d}.leaflet-map{width:100%;height:350px}.map-badge{position:absolute;z-index:500;left:14px;top:14px;max-width:calc(100% - 28px);padding:10px 13px;border-radius:16px;background:#fffdf9f2;border:1px solid var(--line);box-shadow:0 8px 22px #0002;font-weight:900;font-size:13px}.map-actions{position:absolute;z-index:500;left:14px;bottom:14px;display:flex;gap:10px;flex-wrap:wrap}.map-actions .btn{padding:12px 16px;box-shadow:0 8px 24px #0002}.map-loading{position:absolute;z-index:450;inset:0;display:grid;place-items:center;padding:24px;text-align:center;background:linear-gradient(#fffdf9e8,#f4e6d7e8);font-weight:800;color:var(--muted);transition:opacity .2s}.map-loading.hidden{opacity:0;pointer-events:none}.eq-marker{display:grid;place-items:center;width:42px;height:42px;border-radius:50% 50% 50% 0;background:var(--ink);color:white;transform:rotate(-45deg);border:3px solid white;box-shadow:0 5px 15px #0003}.eq-marker span{transform:rotate(45deg);font-size:19px}.leaflet-popup-content-wrapper{border-radius:16px}.leaflet-popup-content{margin:12px 14px;font-family:Inter,system-ui,sans-serif}.cta{background:linear-gradient(#fff8ef,#f3e2ce)}.cta ul{color:#5d5046}
 footer{padding:38px clamp(18px,7vw,105px);background:#120f0d;color:#f7efe6}.footer-brand img{width:44px;height:44px}.footer-brand{margin-bottom:10px}.footer-muted{color:#cfc4b8}
 .float{position:fixed;right:16px;bottom:16px;z-index:30;background:var(--green);color:#fff;padding:13px 17px;border-radius:999px;font-weight:900;box-shadow:0 12px 28px #0003}
 @media(max-width:1000px){.catalog{grid-template-columns:repeat(2,1fr)}}@media(max-width:820px){.hero,.split,.local{grid-template-columns:1fr}.hero-logo{order:-1}.categories{grid-template-columns:1fr 1fr}.banner{flex-direction:column;align-items:flex-start}}@media(max-width:540px){.categories,.catalog{grid-template-columns:1fr}.hero{padding:42px 18px}.section{padding:62px 18px}.hero h1{font-size:44px}.actions .btn{width:100%}.brand strong{font-size:15px}.brand small{font-size:8px}}
@@ -90,11 +91,12 @@ footer{padding:38px clamp(18px,7vw,105px);background:#120f0d;color:#f7efe6}.foot
 <aside class="info"><h3>Datos del local</h3><b>📍 Ubicación</b><p>Monteagudo 4966, José C. Paz, Buenos Aires</p><b>🕒 Horarios</b><p>Lunes a sábados de 9 a 13 hs y de 17 a 20 hs</p><b>📱 WhatsApp</b><p>11 6574-2787</p><a href="https://instagram.com/entrequesos.fiambreria" target="_blank" rel="noopener"><strong>Instagram @entrequesos.fiambreria →</strong></a></aside>
 </section>
 
-<section class="section"><span class="eyebrow">VISITANOS</span><h2>Estamos en José C. Paz.</h2><div class="local"><div class="location-card"><div class="location-icon">📍</div><h3>Encontranos en José C. Paz</h3><p>Estamos en una ubicación fácil de encontrar.</p><div class="location-address">Monteagudo 4966<br>José C. Paz, Buenos Aires</div><div class="location-actions"><a class="btn primary" data-map href="#">Abrir en Google Maps</a></div></div><div class="cta"><h3>¿Querés hacer un pedido?</h3><p>Te respondemos por WhatsApp para ayudarte con tu compra, precios y disponibilidad.</p><a class="btn primary" data-wa href="#">Pedir por WhatsApp</a><ul><li>Quesos y fiambres</li><li>Panadería</li><li>Productos de almacén</li><li>Opciones para picadas</li></ul></div></div></section>
+<section class="section"><span class="eyebrow">VISITANOS</span><h2>Estamos en José C. Paz.</h2><div class="local"><div class="map-shell"><div class="map-badge">📍 Monteagudo 4966 · José C. Paz</div><div id="leafletMap" class="leaflet-map" aria-label="Mapa interactivo de Entre Quesos Fiambrería"></div><div class="map-loading" id="mapLoading">Ubicando Entre Quesos…</div><div class="map-actions"><a class="btn primary" data-map href="#">Abrir en Google Maps</a></div></div><div class="cta"><h3>¿Querés hacer un pedido?</h3><p>Te respondemos por WhatsApp para ayudarte con tu compra, precios y disponibilidad.</p><a class="btn primary" data-wa href="#">Pedir por WhatsApp</a><ul><li>Quesos y fiambres</li><li>Panadería</li><li>Productos de almacén</li><li>Opciones para picadas</li></ul></div></div></section>
 </main>
 
 <footer><div class="brand footer-brand"><img src="logo-entre-quesos.webp" alt="Logo Entre Quesos"><span><strong>ENTRE QUESOS</strong><small>FIAMBRERÍA</small></span></div><div class="footer-muted">Fiambrería · Almacén · Panadería<br>© <span id="year"></span> Entre Quesos Fiambrería</div></footer>
 <a class="float" data-wa href="#">WhatsApp</a>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 const phone="5491165742787",base="Hola Entre Quesos, quisiera hacer una consulta/pedido.",address="Monteagudo 4966, José C. Paz, Buenos Aires";
 const wa=m=>"https://wa.me/"+phone+"?text="+encodeURIComponent(m);
@@ -102,6 +104,64 @@ document.querySelectorAll("[data-wa]").forEach(a=>{a.href=wa(base);a.target="_bl
 document.querySelectorAll("[data-product]").forEach(a=>{a.href=wa("Hola Entre Quesos, quisiera consultar precio y stock de "+a.dataset.product+".");a.target="_blank";a.rel="noopener"});
 const maps="https://maps.app.goo.gl/jhirSttmfzFovMLp9";
 document.querySelectorAll("[data-map]").forEach(a=>{a.href=maps;a.target="_blank";a.rel="noopener"});
+const mapEl=document.getElementById("leafletMap"),mapLoading=document.getElementById("mapLoading");
+if(mapEl&&window.L){
+  const fallback=[-34.515,-58.765];
+  const map=L.map(mapEl,{zoomControl:true,scrollWheelZoom:false,tap:true}).setView(fallback,15);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+    maxZoom:19,
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  const icon=L.divIcon({className:"",html:'<div class="eq-marker"><span>🧀</span></div>',iconSize:[42,42],iconAnchor:[21,42],popupAnchor:[0,-38]});
+  const inJoseCPaz=(lat,lon)=>lat>-34.57&&lat<-34.45&&lon>-58.86&&lon<-58.68;
+  const validateName=(name)=>{const s=(name||"").toLowerCase();return s.includes("monteagudo")&&(s.includes("paz")||s.includes("b1665"))};
+  const queries=[
+    "Monteagudo 4966, B1665HJE, José C. Paz, Buenos Aires, Argentina",
+    "Bacanes Pet, Monteagudo 4966, José C. Paz, Buenos Aires, Argentina",
+    "Monteagudo 4966, Jose Clemente Paz, Buenos Aires, Argentina"
+  ];
+  const fetchNominatim=async(q)=>{
+    const url="https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=3&countrycodes=ar&q="+encodeURIComponent(q);
+    const r=await fetch(url,{headers:{Accept:"application/json","Accept-Language":"es"}});
+    if(!r.ok) throw new Error("nominatim");
+    const rows=await r.json();
+    const hit=rows.find(x=>validateName(x.display_name)&&inJoseCPaz(Number(x.lat),Number(x.lon)));
+    return hit?{lat:Number(hit.lat),lon:Number(hit.lon),name:hit.display_name}:null;
+  };
+  const fetchPhoton=async(q)=>{
+    const url="https://photon.komoot.io/api/?limit=5&lang=es&q="+encodeURIComponent(q);
+    const r=await fetch(url,{headers:{Accept:"application/json"}});
+    if(!r.ok) throw new Error("photon");
+    const data=await r.json();
+    const hit=(data.features||[]).find(x=>{
+      const p=x.properties||{},coords=x.geometry&&x.geometry.coordinates;
+      const label=[p.name,p.street,p.city,p.postcode,p.state].filter(Boolean).join(" ");
+      return coords&&validateName(label)&&inJoseCPaz(Number(coords[1]),Number(coords[0]));
+    });
+    return hit?{lat:Number(hit.geometry.coordinates[1]),lon:Number(hit.geometry.coordinates[0]),name:"Monteagudo 4966, José C. Paz"}:null;
+  };
+  (async()=>{
+    let pos=null;
+    for(const q of queries){
+      try{pos=await fetchNominatim(q)}catch(e){}
+      if(pos)break;
+    }
+    if(!pos){
+      for(const q of queries){
+        try{pos=await fetchPhoton(q)}catch(e){}
+        if(pos)break;
+      }
+    }
+    if(pos){
+      map.setView([pos.lat,pos.lon],17,{animate:false});
+      L.marker([pos.lat,pos.lon],{icon}).addTo(map)
+        .bindPopup("<strong>Entre Quesos Fiambrería</strong><br>Monteagudo 4966<br>José C. Paz").openPopup();
+      if(mapLoading)mapLoading.classList.add("hidden");
+    }else{
+      if(mapLoading)mapLoading.innerHTML='No pudimos fijar el pin exacto aquí.<br><a href="'+maps+'" target="_blank" rel="noopener" style="text-decoration:underline;color:inherit">Abrir ubicación exacta en Google Maps</a>';
+    }
+  })();
+}
 const copy=document.querySelector("[data-copy]"),ok=document.getElementById("copyOk");
 if(copy)copy.addEventListener("click",async()=>{try{if(navigator.clipboard)await navigator.clipboard.writeText(address);else{const t=document.createElement("textarea");t.value=address;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove()}if(ok){ok.classList.add("show");setTimeout(()=>ok.classList.remove("show"),2200)}}catch(e){alert("Dirección: "+address)}});
 document.getElementById("year").textContent=new Date().getFullYear();
